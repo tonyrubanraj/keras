@@ -28,6 +28,7 @@ from keras.utils import tf_contextlib
 
 # isort: off
 from tensorflow.python.framework import ops
+from tensorflow.python.util import variable_utils
 from tensorflow.python.util.tf_export import keras_export
 
 
@@ -488,6 +489,16 @@ def is_tensor_or_variable(x):
 def is_tensor_or_extension_type(x):
     """Returns true if 'x' is a TF-native type or an ExtensionType."""
     return tf.is_tensor(x) or is_extension_type(x)
+
+
+def convert_variables_to_tensors(values):
+  """Converts `Variable`s in `values` to `Tensor`s."""
+  return variable_utils.convert_variables_to_tensors(values)
+
+
+def replace_variables_with_atoms(values):
+  """Replaces `ResourceVariable`s in `values` with tf.nest atoms."""
+  return variable_utils.replace_variables_with_atoms(values)
 
 
 def assert_no_legacy_layers(layers):
